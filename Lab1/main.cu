@@ -9,8 +9,8 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
-static const int MIN = -100;
-static const int MAX =  100;
+static const int MIN = -30;
+static const int MAX = 30;
 static const unsigned int BLOCK_SIZE = 32;
 static const size_t MATRIX_SIZES[3] = {1000, 2000, 3000};
 
