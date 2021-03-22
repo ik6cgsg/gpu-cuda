@@ -37,9 +37,9 @@ static float gpuMult(double* m1, double* m2, size_t size, double* res)
     size_t matrixBytesNum = sizeof(double) * size * size;
     dim3 cudaThreads(BLOCK_SIZE, BLOCK_SIZE);
     dim3 cudaBlocks((size + cudaThreads.x - 1) / cudaThreads.x, (size + cudaThreads.y - 1) / cudaThreads.y);
-    cudaMalloc(reinterpret_cast<void**>(&cudaM1), matrixBytesNum);
-    cudaMalloc(reinterpret_cast<void**>(&cudaM2), matrixBytesNum);
-    cudaMalloc(reinterpret_cast<void**>(&cudaRes), matrixBytesNum);
+    cudaMalloc(&cudaM1, matrixBytesNum);
+    cudaMalloc(&cudaM2, matrixBytesNum);
+    cudaMalloc(&cudaRes, matrixBytesNum);
     cudaEventCreate(&start);
     cudaEventCreate(&end);
     cudaEventRecord(start, 0);
@@ -52,8 +52,8 @@ static float gpuMult(double* m1, double* m2, size_t size, double* res)
     cudaMemcpy(res, cudaRes, matrixBytesNum, cudaMemcpyDeviceToHost);
     cudaEventDestroy(end);
     cudaEventDestroy(start);
-    cudaFree(cudaM2);
     cudaFree(cudaRes);
+    cudaFree(cudaM2);
     cudaFree(cudaM1);
     return gpuTime / 1000.0f;
 }
